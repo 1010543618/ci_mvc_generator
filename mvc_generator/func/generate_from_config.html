@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通过配置生成</title>
+    <link href="../vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../vendors/iCheck/skins/line/green.css" rel="stylesheet">
+    <link href="../css/custom.css" rel="stylesheet">
+    <link href="../css/public.css" rel="stylesheet">
+</head>
+<body class="bg_write">
+  <div>
+    <h2 class="StepTitle text-center">选择生成位置（"../"是mvc_generator文件夹）</h2>
+    <form id="generate-from-config-form" action="../ci_mvc_generator.php?action=generate_from_config" method="post" class="form-horizontal form-label-left">
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">model文件夹<span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <input name="m_folder" type="text" value="../application/models" class="form-control col-md-7 col-xs-12">
+        </div>
+        <label class="col-md-3 col-sm-3 col-xs-12 text-left text-danger" for="last-name">*会替换掉文件夹中的同名文件</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">view文件夹<span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <input name="v_folder" type="text" value="../views" class="form-control col-md-7 col-xs-12">
+        </div>
+        <label class="col-md-3 col-sm-3 col-xs-12 text-left text-danger" for="last-name">*会替换掉文件夹中的同名文件</label>
+      </div>
+      <div class="form-group">
+        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">controller文件夹<span class="required">*</span></label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <input name="c_folder" type="text" value="../application/controllers" class="form-control col-md-7 col-xs-12">
+        </div>
+        <label class="col-md-3 col-sm-3 col-xs-12 text-left text-danger" for="last-name">*会替换掉文件夹中的同名文件</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">子view文件夹<span class="required">*</span></label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <input name="v_child_folder" type="text" value="back" class="form-control col-md-7 col-xs-12">
+        </div>
+        <label class="col-md-3 col-sm-3 col-xs-12 text-left text-danger" for="last-name">*会替换掉文件夹中的同名文件</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">子controller文件夹<span class="required">*</span></label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <input name="c_child_folder" type="text" value="back" class="form-control col-md-7 col-xs-12">
+        </div>
+        <label class="col-md-3 col-sm-3 col-xs-12 text-left text-danger" for="last-name">*会替换掉文件夹中的同名文件</label>
+      </div>
+      <h2 class="StepTitle text-center">配置</h2>
+      <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-6">
+            <p class="cmg-config-example-title bg-primary">我的配置</p>
+            <textarea name="generator_config" id="config-textarea"></textarea>
+        </div>
+        <div class="col-md-6">
+          <p class="cmg-config-example-title bg-primary">eg.</p>
+          <textarea id="example-config-textarea">
+{
+    "admin": {
+        "tbl_comment": "管理员",
+        "id": [
+            {
+                "field": "admin_id",
+                "comment": "管理员ID"
+            }
+        ],
+        "col": [
+            {
+                "field": "admin_name",
+                "comment": "管理员名",
+                "type": "input",
+                "validation": "required "
+            },
+            {
+                "field": "role_id",
+                "comment": "角色ID（用“,”分隔）",
+                "type": "select",
+                "select_conf": [
+                    "role",
+                    "role_id",
+                    "role_name"
+                ],
+                "validation": ""
+            },
+            {
+                "field": "perm_id",
+                "comment": "权限ID（用“,”分隔）",
+                "type": "multichoice",
+                "multichoice_conf": [
+                    "permission",
+                    "perm_id",
+                    "controller"
+                ],
+                "validation": ""
+            }
+        ],
+        "join": {
+            "admin_game": {
+                "pri_field": "admin.admin_id",
+                "join_field": "admin_game.admin_id",
+                "manipulation_col": {
+                    "pri_col": [
+                        {
+                            "field": "admin_id",
+                            "pri_field": "admin_id"
+                        }
+                    ],
+                    "input_col": [
+                        {
+                            "field": "game_id",
+                            "comment": "游戏",
+                            "type": "multichoice",
+                            "option_field_conf": [
+                                "game",
+                                "game_id",
+                                "game_name"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "game": {
+                "pri_field": "admin_game.game_id",
+                "join_field": "game.game_id",
+                "col": [
+                    {
+                        "field": "game_name",
+                        "comment": "游戏名",
+                        "is_group_concat": "true"
+                    }
+                ]
+            }
+        }
+    },
+    "game": {
+        "tbl_comment": "游戏",
+        "id": [
+            {
+                "field": "game_id",
+                "comment": "游戏ID",
+                "type": "input",
+                "validation": "required "
+            }
+        ],
+        "col": [
+            {
+                "field": "game_name",
+                "comment": "游戏名",
+                "type": "input",
+                "validation": "required "
+            }
+        ]
+    },
+    "permission": {
+        "tbl_comment": "权限",
+        "id": [
+            {
+                "field": "perm_id",
+                "comment": "权限ID",
+                "type": "input",
+                "validation": "required "
+            }
+        ],
+        "col": [
+            {
+                "field": "controller",
+                "comment": "模块（控制器）",
+                "type": "input",
+                "validation": "required "
+            },
+            {
+                "field": "action",
+                "comment": "功能（方法）",
+                "type": "input",
+                "validation": "required "
+            }
+        ]
+    },
+    "role": {
+        "tbl_comment": "角色",
+        "id": [
+            {
+                "field": "role_id",
+                "comment": "角色ID",
+                "type": "input",
+                "validation": "required "
+            }
+        ],
+        "col": [
+            {
+                "field": "role_name",
+                "comment": "角色",
+                "type": "input",
+                "validation": "required "
+            },
+            {
+                "field": "perm_id",
+                "comment": "权限",
+                "type": "multichoice",
+                "multichoice_conf": [
+                    "permission",
+                    "perm_id",
+                    "controller"
+                ],
+                "validation": "required "
+            }
+        ]
+    },
+    "user": {
+        "tbl_comment": "用户",
+        "id": [
+            {
+                "field": "user_id",
+                "comment": "用户id",
+                "type": "input",
+                "validation": "required "
+            }
+        ],
+        "col": [
+            {
+                "field": "user_name",
+                "comment": "用户名",
+                "type": "input",
+                "validation": "required "
+            },
+            {
+                "field": "user_sex",
+                "comment": "用户性别",
+                "type": "select",
+                "select_options": [
+                    "male",
+                    "female",
+                    "unclear"
+                ],
+                "validation": ""
+            },
+            {
+                "field": "user_label",
+                "comment": "用户标签",
+                "type": "multichoice",
+                "multichoice_options": [
+                    "label1",
+                    "label2",
+                    "label3",
+                    "label4",
+                    "label5",
+                    "label6"
+                ],
+                "validation": ""
+            },
+            {
+                "field": "info",
+                "comment": "用户信息",
+                "type": "text",
+                "validation": "required "
+            },
+            {
+                "field": "profile",
+                "comment": "用户头像",
+                "type": "file",
+                "validation": ""
+            },
+            {
+                "field": "birthday",
+                "comment": "用户生日",
+                "type": "date",
+                "validation": "required "
+            },
+            {
+                "field": "get_up_time",
+                "comment": "起床时间",
+                "type": "time",
+                "validation": "required "
+            },
+            {
+                "field": "gift_time",
+                "comment": "收礼物的时间",
+                "type": "timestamp",
+                "validation": "required "
+            }
+        ]
+    },
+    "admin_game": {
+        "tbl_comment": "管理员_游戏",
+        "join": {
+            "admin": {
+                "pri_field": "admin.admin_id",
+                "join_field": "admin_game.admin_id"
+            },
+            "game": {
+                "pri_field": "game.game_id",
+                "join_field": "admin_game.game_id"
+            }
+        },
+        "col": [
+            {
+                "field": "admin_id",
+                "comment": "管理员ID",
+                "type": "input",
+                "validation": "required "
+            },
+            {
+                "field": "game_id",
+                "comment": "游戏ID",
+                "type": "input",
+                "validation": "required "
+            }
+        ]
+    },
+    "admin_composite_key":{
+        "tbl_comment":"管理员（联合主键）",
+        "id":[{
+            "field":"admin_id",
+            "comment":"管理员ID"
+        },
+        {
+            "field":"admin_name",
+            "comment":"管理员名"
+        }],
+        "col":[{
+            "field":"admin_name",
+            "comment":"管理员名",
+            "type":"input",
+            "validation":"required "
+        }],
+        "join": {
+            "admin_composite_key_game": {
+                "pri_field": "admin_composite_key.admin_id",
+                "join_field": "admin_composite_key_game.admin_id",
+                "manipulation_col": {
+                    "pri_col": [
+                        {
+                            "field": "admin_id",
+                            "pri_field": "admin_id"
+                        },
+                        {
+                            "field": "admin_name",
+                            "pri_field": "admin_name"
+                        }
+                    ],
+                    "input_col": [
+                        {
+                            "field": "game_id",
+                            "comment": "游戏",
+                            "type": "multichoice",
+                            "option_field_conf": [
+                                "game",
+                                "game_id",
+                                "game_name"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "game": {
+                "pri_field": "admin_composite_key_game.game_id",
+                "join_field": "game.game_id",
+                "col": [
+                    {
+                        "field": "game_name",
+                        "comment": "游戏名",
+                        "is_group_concat": "true"
+                    }
+                ]
+            }
+        }
+    },
+    "admin_composite_key_game":{
+        "tbl_comment":"管理员_游戏（联合外键）",
+        "col":[{
+            "field":"admin_id",
+            "comment":"管理员ID",
+            "type":"input",
+            "validation":"required "
+        },
+        {
+            "field":"admin_name",
+            "comment":"管理员名",
+            "type":"input",
+            "validation":"required "
+        },
+        {
+            "field":"game_id",
+            "comment":"游戏ID",
+            "type":"input",
+            "validation":"required "
+        }]
+    }
+}
+          </textarea>
+        </div>
+      </div>
+      <div class="col-md-2 text-center">
+        <button onclick="generate_from_config()" class="btn btn-lg btn-success" style="margin-top: 80px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;生成&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+      </div>
+    </form>
+  </div>
+  <!-- 配置手册 -->
+  <div id="generator-manuals" class="col-md-12 col-sm-12 col-xs-12 padding-0">
+    <h1 class="text-center">配置手册</h1>
+    <ul>
+      <li>
+        <h1>【表名】(<*>map):</h1>
+        <ul>
+          <li>
+            <h2>tbl_comment(<*>string):【表显示的名字】,</h2>
+          </li>
+          <li>
+            <h2>id(list，表主键（删除修改时用，没有主键将不会有添加修改功能）):</h2>
+            <li>
+              <h3>(map，每一个主键):</h3>
+              <ul>
+                <li>field(<*>string):【id的字段名】,</li>
+                <li>comment(<*>string):【id显示的名字】,</li>
+              </ul>
+            </li>
+          </li>
+          <li>
+            <h2>col(list，表需要的列（添加查询用）):</h2>
+            <ul>
+              <li>
+                <h3>(map，需要的每一列):</h3>
+                <ul>
+                  <li>field(<*>string):【列的字段名】,</li>
+                  <li>comment(<*>string):【列显示的名字】,</li>
+                  <li>validation(string):【列的验证规则（parsley.js验证规则）】,</li>
+                  <li>type(string):【列的类型input(默认)/text/file/select/multichoice/datetime/timestamp/date/time/year】（input使用文本框，text将使用富文本编辑器，file将保存图片的位置，select将使用select，multichoice将使用checkbox，datetime/timestamp/date/time/year将使用不同配置的日期或时间选择器）,</li>
+                  <li>file_path(string):【文件保存的路径，type为file时可设置】（不设置将保存到“跟目录/upload/当前表名/当前字段名”文件夹),</li>
+                  <li>select_options(array):【select的选项，type为select时可设置】（默认是空数组([])，字符串格式：“表名-字段名”）,</li>
+                  <li>multichoice_options(array):【checkbox的选项，type为multichoice时可设置】（默认是空数组([])，字符串格式：“表名-字段名”),</li>
+                  <li>select_conf(array):【select的配置，type为select时可设置，[0]：表名，[1]：存储时用的字段名，[2]：展示用的字段名。将其他表的字段作为选项（用于多对一）】,</li>
+                  <li>multichoice_conf(array):【checkbox的选项，type为multichoice时可设置，[0]：表名，[1]：存储时用的字段名，[2]：展示用的字段名。将其他表的字段作为选项（用于多对多）】,</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <h2>join(map，外连接的表):</h2>
+            <ul>
+              <li>
+                <h3>【表名】(map):</h3>
+                <ul>
+                  <li>pri_field(<*>string):【左表字段名称：表名.字段名】,</li>
+                  <li>join_field(<*>string):【右表字段名称：表名.字段名】,</li>
+                  <li>
+                    <h4>col(list，连接表要查询的列):</h4>
+                    <ul>
+                      <li>
+                        <h5>(map，连接表要查询的每一列):</h5>
+                        <ul>
+                          <li>field(<*>string):【列的字段名】,</li>
+                          <li>comment(<*>string):【列显示的名字】,</li>
+                          <li>is_group_concat(string):【false（默认）/true是否将该字段合并（一对多，多对多设置为true时将多个结果合并）】,</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <h4>manipulation_col(map，连接要操作的从其他表选数据的列):</h4>
+                    <li>
+                      <h5>pri_col(list，连接表与主表对应的列):</h5>
+                      <ul>
+                        <li>
+                          <h6>(map，连接表与主表对应的每一列):</h6>
+                          <ul>
+                            <li>field(<*>string):【列的字段名】,</li>
+                            <li>pri_field(<*>string):【列对应的主表的字段名】,</li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <h5>input_col(map，连接表要输入数据的列):</h5>
+                      <ul>
+                        <li>
+                          <h6>(map，连接表要输入数据的每一列):</h6>
+                          <ul>
+                            <li>field(<*>string):【列的字段名】,</li>
+                            <li>comment(<*>string):【列显示的名字】,</li>
+                            <li>option_field_conf(<*>string):【作为选项的字段，[0]：表名，[1]：存储时用的字段名，[2]：展示用的字段名。将其他表的字段作为选项】,</li>
+                            <li>type(string):【表单中选择的形式，multichoice（默认）/select（select将使用select单选，multichoice使用checkbox复选）】,</li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <!-- /配置手册 -->
+<script>
+  function generate_from_config(){
+      var generate_from_config_form = document.querySelector('#generate-from-config-form');
+      // generate_from_config_form.querySelector('input[name="confirm"]').value = 'true';
+      generate_from_config_form.submit();
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>自动生成向导</title>
+    <!-- Bootstrap -->
+    <!-- <link href="<?php echo base_url('views/back/vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet"> -->
+    <link href="./vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <!-- <link href="<?php echo base_url('views/back/vendors/bootstrap/dist/css/font-awesome.min.css')?>" rel="stylesheet"> -->
+    <link href="./vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="./vendors/iCheck/skins/line/green.css" rel="stylesheet">
+    <!-- Gentelella custom -->
+    <link href="./css/custom.css" rel="stylesheet">
+    <link href="./css/public.css" rel="stylesheet">
+  </head>
+  <body class="nav-md">
+    <div class="container body">
+        <!-- page content -->
+        <div class="row">
+          <!-- 自动生成向导 -->
+          <div id="generator-wizard" class="col-md-12 col-sm-12 col-xs-12 padding-0">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>自动生成向导<small>CI+Gentelella,写了一半的坑</small></h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <p>根据自己的环境进行配置.</p>
+                <!-- SmartWizard Content -->
+                <div id="wizard" class="form_wizard wizard_horizontal">
+                  <ul class="wizard_steps">
+                    <li>
+                      <a href="#step-1">
+                        <span class="step_no">1</span>
+                        <span class="step_descr">
+                          Step 1<br />
+                            <small>配置数据库</small>
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#step-2">
+                        <span class="step_no">2</span>
+                        <span class="step_descr">
+                             Step 2<br />
+                            <small>选择要自动生成的表</small>
+                         </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#step-3">
+                        <span class="step_no">3</span>
+                        <span class="step_descr">
+                            Step 3<br />
+                            <small>选择生成位置（"../"是mvc_generator文件夹）</small>
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#step-4">
+                        <span class="step_no">4</span>
+                        <span class="step_descr">
+                            Step 4<br />
+                            <small>修改配置文件</small>
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#step-5">
+                        <span class="step_no">5</span>
+                        <span class="step_descr">
+                            Step 5<br />
+                            <small>自动生成</small>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                  <div id="step-1">
+                    <form id="step-1-form" method="post" class="form-horizontal form-label-left">
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">主&nbsp;&nbsp;&nbsp;机&nbsp;<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input name="host" type="text" value="localhost" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">用户名&nbsp;<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input name="user" type="text" value="cmg_test" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">密&nbsp;&nbsp;&nbsp;码&nbsp;<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input name="pwd" type="text" value="123456" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">数据库&nbsp;<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input name="db" type="text" value="cmg_test" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <input name="step" type="text" value="1" style="display: none;">
+                    </form>
+                  </div>
+                  <div id="step-2">
+                    <form id="step-2-form" method="post" class="form-horizontal form-label-left">
+                      <div class="form-group">
+                        <div class="col-md-offset-2 col-md-1">
+                          <div class="checkbox">
+                            <input id="select-all-tables" type="checkbox"> 
+                            <label>
+                              全选
+                            </label>
+                          </div>
+                        </div>
+                        <div id="tables-checkbox" class="col-md-6"></div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">主&nbsp;&nbsp;&nbsp;机&nbsp;<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input name="host" type="text" value="" readonly class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">用户名&nbsp;<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input name="user" type="text" value="" readonly class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">密&nbsp;&nbsp;&nbsp;码&nbsp;<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input name="pwd" type="text" value="" readonly class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">数据库&nbsp;<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input name="db" type="text" readonly class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <input name="step" type="text" value="2" style="display: none;">
+                    </form>
+                  </div>
+                  <!--  -->
+                  <div id="step-3">
+                    <h2 class="StepTitle text-center">选择生成位置</h2>
+                    <form id="step-3-form" method="post" class="form-horizontal form-label-left">
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">model文件夹<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input name="m_folder" type="text" value="../application/models" class="form-control col-md-7 col-xs-12">
+                        </div>
+                        <label class="col-md-3 col-sm-3 col-xs-12 text-left text-danger" for="last-name">*会替换掉文件夹中的同名文件</label>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">view文件夹<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input name="v_folder" type="text" value="../views" class="form-control col-md-7 col-xs-12">
+                        </div>
+                        <label class="col-md-3 col-sm-3 col-xs-12 text-left text-danger" for="last-name">*会替换掉文件夹中的同名文件</label>
+                      </div>
+                      <div class="form-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">controller文件夹<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input name="c_folder" type="text" value="../application/controllers" class="form-control col-md-7 col-xs-12">
+                        </div>
+                        <label class="col-md-3 col-sm-3 col-xs-12 text-left text-danger" for="last-name">*会替换掉文件夹中的同名文件</label>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">子view文件夹<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input name="v_child_folder" type="text" value="back" class="form-control col-md-7 col-xs-12">
+                        </div>
+                        <label class="col-md-3 col-sm-3 col-xs-12 text-left text-danger" for="last-name">*会替换掉文件夹中的同名文件</label>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">子controller文件夹<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input name="c_child_folder" type="text" value="back" class="form-control col-md-7 col-xs-12">
+                        </div>
+                        <label class="col-md-3 col-sm-3 col-xs-12 text-left text-danger" for="last-name">*会替换掉文件夹中的同名文件</label>
+                      </div>
+                      <input name="step" type="text" value="3_4" style="display: none;">
+                    </form>
+                  </div>
+                  <div id="step-4">
+                    <div class="col-md-offset-2 col-md-8">
+                      <h2 class="StepTitle text-center">修改配置文件</h2>
+                      <div class="col-md-6">
+                        <form id="step-4-form" method="post" class="form-horizontal form-label-left">
+                          <div class="checkbox">
+                            <input name="is_save_config" type="checkbox" value="true" checked="checked" id="is-save-generator-config">
+                            <label>
+                              是否将修改后的配置文件保存到./config
+                            </label>
+                          </div>
+                          <textarea name="generator_config" id="config-textarea"></textarea>
+                        </form>
+                      </div>
+                      <div class="col-md-6">
+                        <p class="cmg-config-example-title bg-primary">eg.</p>
+                        <textarea name="generator_config" id="example-config-textarea">
+{
+    "admin": {
+        "tbl_comment": "管理员",
+        "id": [
+            {
+                "field": "admin_id",
+                "comment": "管理员ID"
+            }
+        ],
+        "col": [
+            {
+                "field": "admin_name",
+                "comment": "管理员名",
+                "type": "input",
+                "validation": "required "
+            },
+            {
+                "field": "role_id",
+                "comment": "角色ID（用“,”分隔）",
+                "type": "select",
+                "select_conf": [
+                    "role",
+                    "role_id",
+                    "role_name"
+                ],
+                "validation": ""
+            },
+            {
+                "field": "perm_id",
+                "comment": "权限ID（用“,”分隔）",
+                "type": "multichoice",
+                "multichoice_conf": [
+                    "permission",
+                    "perm_id",
+                    "controller"
+                ],
+                "validation": ""
+            }
+        ],
+        "join": {
+            "admin_game": {
+                "pri_field": "admin.admin_id",
+                "join_field": "admin_game.admin_id",
+                "manipulation_col": {
+                    "pri_col": [
+                        {
+                            "field": "admin_id",
+                            "pri_field": "admin_id"
+                        }
+                    ],
+                    "input_col": [
+                        {
+                            "field": "game_id",
+                            "comment": "游戏",
+                            "type": "multichoice",
+                            "option_field_conf": [
+                                "game",
+                                "game_id",
+                                "game_name"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "game": {
+                "pri_field": "admin_game.game_id",
+                "join_field": "game.game_id",
+                "col": [
+                    {
+                        "field": "game_name",
+                        "comment": "游戏名",
+                        "is_group_concat": "true"
+                    }
+                ]
+            }
+        }
+    },
+    "game": {
+        "tbl_comment": "游戏",
+        "id": [
+            {
+                "field": "game_id",
+                "comment": "游戏ID",
+                "type": "input",
+                "validation": "required "
+            }
+        ],
+        "col": [
+            {
+                "field": "game_name",
+                "comment": "游戏名",
+                "type": "input",
+                "validation": "required "
+            }
+        ]
+    },
+    "permission": {
+        "tbl_comment": "权限",
+        "id": [
+            {
+                "field": "perm_id",
+                "comment": "权限ID",
+                "type": "input",
+                "validation": "required "
+            }
+        ],
+        "col": [
+            {
+                "field": "controller",
+                "comment": "模块（控制器）",
+                "type": "input",
+                "validation": "required "
+            },
+            {
+                "field": "action",
+                "comment": "功能（方法）",
+                "type": "input",
+                "validation": "required "
+            }
+        ]
+    },
+    "role": {
+        "tbl_comment": "角色",
+        "id": [
+            {
+                "field": "role_id",
+                "comment": "角色ID",
+                "type": "input",
+                "validation": "required "
+            }
+        ],
+        "col": [
+            {
+                "field": "role_name",
+                "comment": "角色",
+                "type": "input",
+                "validation": "required "
+            },
+            {
+                "field": "perm_id",
+                "comment": "权限",
+                "type": "multichoice",
+                "multichoice_conf": [
+                    "permission",
+                    "perm_id",
+                    "controller"
+                ],
+                "validation": "required "
+            }
+        ]
+    },
+    "user": {
+        "tbl_comment": "用户",
+        "id": [
+            {
+                "field": "user_id",
+                "comment": "用户id",
+                "type": "input",
+                "validation": "required "
+            }
+        ],
+        "col": [
+            {
+                "field": "user_name",
+                "comment": "用户名",
+                "type": "input",
+                "validation": "required "
+            },
+            {
+                "field": "user_sex",
+                "comment": "用户性别",
+                "type": "select",
+                "select_options": [
+                    "male",
+                    "female",
+                    "unclear"
+                ],
+                "validation": ""
+            },
+            {
+                "field": "user_label",
+                "comment": "用户标签",
+                "type": "multichoice",
+                "multichoice_options": [
+                    "label1",
+                    "label2",
+                    "label3",
+                    "label4",
+                    "label5",
+                    "label6"
+                ],
+                "validation": ""
+            },
+            {
+                "field": "info",
+                "comment": "用户信息",
+                "type": "text",
+                "validation": "required "
+            },
+            {
+                "field": "profile",
+                "comment": "用户头像",
+                "type": "file",
+                "validation": ""
+            },
+            {
+                "field": "birthday",
+                "comment": "用户生日",
+                "type": "date",
+                "validation": "required "
+            },
+            {
+                "field": "get_up_time",
+                "comment": "起床时间",
+                "type": "time",
+                "validation": "required "
+            },
+            {
+                "field": "gift_time",
+                "comment": "收礼物的时间",
+                "type": "timestamp",
+                "validation": "required "
+            }
+        ]
+    },
+    "admin_game": {
+        "tbl_comment": "管理员_游戏",
+        "join": {
+            "admin": {
+                "pri_field": "admin.admin_id",
+                "join_field": "admin_game.admin_id"
+            },
+            "game": {
+                "pri_field": "game.game_id",
+                "join_field": "admin_game.game_id"
+            }
+        },
+        "col": [
+            {
+                "field": "admin_id",
+                "comment": "管理员ID",
+                "type": "input",
+                "validation": "required "
+            },
+            {
+                "field": "game_id",
+                "comment": "游戏ID",
+                "type": "input",
+                "validation": "required "
+            }
+        ]
+    },
+    "admin_composite_key":{
+        "tbl_comment":"管理员（联合主键）",
+        "id":[{
+            "field":"admin_id",
+            "comment":"管理员ID"
+        },
+        {
+            "field":"admin_name",
+            "comment":"管理员名"
+        }],
+        "col":[{
+            "field":"admin_name",
+            "comment":"管理员名",
+            "type":"input",
+            "validation":"required "
+        }],
+        "join": {
+            "admin_composite_key_game": {
+                "pri_field": "admin_composite_key.admin_id",
+                "join_field": "admin_composite_key_game.admin_id",
+                "manipulation_col": {
+                    "pri_col": [
+                        {
+                            "field": "admin_id",
+                            "pri_field": "admin_id"
+                        },
+                        {
+                            "field": "admin_name",
+                            "pri_field": "admin_name"
+                        }
+                    ],
+                    "input_col": [
+                        {
+                            "field": "game_id",
+                            "comment": "游戏",
+                            "type": "multichoice",
+                            "option_field_conf": [
+                                "game",
+                                "game_id",
+                                "game_name"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "game": {
+                "pri_field": "admin_composite_key_game.game_id",
+                "join_field": "game.game_id",
+                "col": [
+                    {
+                        "field": "game_name",
+                        "comment": "游戏名",
+                        "is_group_concat": "true"
+                    }
+                ]
+            }
+        }
+    },
+    "admin_composite_key_game":{
+        "tbl_comment":"管理员_游戏（联合外键）",
+        "col":[{
+            "field":"admin_id",
+            "comment":"管理员ID",
+            "type":"input",
+            "validation":"required "
+        },
+        {
+            "field":"admin_name",
+            "comment":"管理员名",
+            "type":"input",
+            "validation":"required "
+        },
+        {
+            "field":"game_id",
+            "comment":"游戏ID",
+            "type":"input",
+            "validation":"required "
+        }]
+    }
+}
+                        </textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="step-5">
+                    <h2 class="StepTitle text-center">生成成功</h2>
+                    <h3 class="text-center"><a href="javascript:window.location.href = window.location.href.split('#')[0].split('?')[0].split('/mvc_generator/generator_guide.html')[0];">查看生成结果</a></h3>
+                  </div>
+                </div>
+                <!-- /SmartWizard Content -->
+              </div>
+            </div>
+          </div>
+          <!-- /自动生成向导 -->
+          <!-- 配置手册 -->
+          <div id="generator-manuals" class="col-md-12 col-sm-12 col-xs-12 padding-0">
+            <ul>
+              <li>
+                <h1>【表名】(<*>map):</h1>
+                <ul>
+                  <li>
+                    <h2>tbl_comment(<*>string):【表显示的名字】,</h2>
+                  </li>
+                  <li>
+                    <h2>id(list，表主键（删除修改时用，没有主键将不会有添加修改功能）):</h2>
+                    <li>
+                      <h3>(map，每一个主键):</h3>
+                      <ul>
+                        <li>field(<*>string):【id的字段名】,</li>
+                        <li>comment(<*>string):【id显示的名字】,</li>
+                      </ul>
+                    </li>
+                  </li>
+                  <li>
+                    <h2>col(list，表需要的列（添加查询用）):</h2>
+                    <ul>
+                      <li>
+                        <h3>(map，需要的每一列):</h3>
+                        <ul>
+                          <li>field(<*>string):【列的字段名】,</li>
+                          <li>comment(<*>string):【列显示的名字】,</li>
+                          <li>validation(string):【列的验证规则（parsley.js验证规则）】,</li>
+                          <li>type(string):【列的类型input(默认)/text/file/select/multichoice/datetime/timestamp/date/time/year】（input使用文本框，text将使用富文本编辑器，file将保存图片的位置，select将使用select，multichoice将使用checkbox，datetime/timestamp/date/time/year将使用不同配置的日期或时间选择器）,</li>
+                          <li>file_path(string):【文件保存的路径，type为file时可设置】（不设置将保存到“跟目录/upload/当前表名/当前字段名”文件夹),</li>
+                          <li>select_options(array):【select的选项，type为select时可设置】（默认是空数组([])，字符串格式：“表名-字段名”）,</li>
+                          <li>multichoice_options(array):【checkbox的选项，type为multichoice时可设置】（默认是空数组([])，字符串格式：“表名-字段名”),</li>
+                          <li>select_conf(array):【select的配置，type为select时可设置，[0]：表名，[1]：存储时用的字段名，[2]：展示用的字段名。将其他表的字段作为选项（用于多对一）】,</li>
+                          <li>multichoice_conf(array):【checkbox的选项，type为multichoice时可设置，[0]：表名，[1]：存储时用的字段名，[2]：展示用的字段名。将其他表的字段作为选项（用于多对多）】,</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <h2>join(map，外连接的表):</h2>
+                    <ul>
+                      <li>
+                        <h3>【表名】(map):</h3>
+                        <ul>
+                          <li>pri_field(<*>string):【左表字段名称：表名.字段名】,</li>
+                          <li>join_field(<*>string):【右表字段名称：表名.字段名】,</li>
+                          <li>
+                            <h4>col(list，连接表要查询的列):</h4>
+                            <ul>
+                              <li>
+                                <h5>(map，连接表要查询的每一列):</h5>
+                                <ul>
+                                  <li>field(<*>string):【列的字段名】,</li>
+                                  <li>comment(<*>string):【列显示的名字】,</li>
+                                  <li>is_group_concat(string):【false（默认）/true是否将该字段合并（一对多，多对多设置为true时将多个结果合并）】,</li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h4>manipulation_col(map，连接要操作的从其他表选数据的列):</h4>
+                            <li>
+                              <h5>pri_col(list，连接表与主表对应的列):</h5>
+                              <ul>
+                                <li>
+                                  <h6>(map，连接表与主表对应的每一列):</h6>
+                                  <ul>
+                                    <li>field(<*>string):【列的字段名】,</li>
+                                    <li>pri_field(<*>string):【列对应的主表的字段名】,</li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h5>input_col(map，连接表要输入数据的列):</h5>
+                              <ul>
+                                <li>
+                                  <h6>(map，连接表要输入数据的每一列):</h6>
+                                  <ul>
+                                    <li>field(<*>string):【列的字段名】,</li>
+                                    <li>comment(<*>string):【列显示的名字】,</li>
+                                    <li>option_field_conf(<*>string):【作为选项的字段，[0]：表名，[1]：存储时用的字段名，[2]：展示用的字段名。将其他表的字段作为选项】,</li>
+                                    <li>type(string):【表单中选择的形式，multichoice（默认）/select（select将使用select单选，multichoice使用checkbox复选）】,</li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </li>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!-- /配置手册 -->
+        </div>
+        <!-- /page content -->
+    </div>
+
+    <!-- jQuery -->
+    <!-- <script src="<?php echo base_url('views/back/vendors/jquery/dist/jquery.min.js')?>"></script> -->
+    <script src="./vendors/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <!-- <script src="<?php echo base_url('views/back/vendors/bootstrap/dist/js/bootstrap.min.js')?>"></script> -->
+    <script src="./vendors/bootstrap/js/bootstrap.min.js"></script>
+    <!-- jQuery Smart Wizard -->
+    <!-- <script src="<?php echo base_url('views/back/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js')?>"></script> -->
+    <script src="./vendors/jquery.smartWizard.js"></script>
+
+    <script src="./vendors/iCheck/icheck.min.js"></script>
+    <script>
+      function init_window() {
+        $("#generator-wizard").css("minHeight",$(window).height());
+        $(window).resize(function(){
+          $("#generator-wizard").css("minHeight",$(window).height());
+        });
+      }
+      function init_SmartWizard() {
+        if( typeof ($.fn.smartWizard) === 'undefined'){ return; }
+        // 先初始化表单        
+        $('#wizard').smartWizard({
+          labelNext: '下一步',
+          labelPrevious: '上一步',
+          labelFinish: '完成',
+          onLeaveStep: wizard_leaveStep,
+          keyNavigation: false,
+          onShowStep : wizard_showStep
+        });
+        $('.buttonNext').addClass('btn btn-success');
+        $('.buttonPrevious').addClass('btn btn-primary');
+        $('.buttonFinish').addClass('btn btn-default');
+      };
+      
+      function init_iCheck() {
+        // 第二步的select-all-tables
+        $('#select-all-tables').each(function(){
+          var self = $(this),
+              label = self.next(),
+              label_text = label.text();
+          label.remove();
+          self.iCheck({
+            checkboxClass: 'icheckbox_line-green',
+            insert: '<div class="icheck_line-icon"></div>' + label_text
+          }).on('ifChecked', function(){
+            $('#tables-checkbox .icheckbox_line-green').addClass('checked');
+            $('#tables-checkbox input').prop('checked', true);
+          }).on('ifUnchecked', function(){
+            $('#tables-checkbox .icheckbox_line-green').removeClass('checked');
+            $('#tables-checkbox input').prop('checked', false)
+          });
+        });
+        // 第三步的is-save-generator-config
+        $('#is-save-generator-config').each(function(){
+          var self = $(this),
+              label = self.next(),
+              label_text = label.text();
+          label.remove();
+          self.iCheck({
+            checkboxClass: 'icheckbox_line-green',
+            insert: '<div class="icheck_line-icon"></div>' + label_text
+          });
+        });
+      }
+
+      function wizard_leaveStep(obj, context){
+        // console.log(obj, context);
+        // 点击上一步
+        if (context.fromStep > context.toStep) {
+          return true;
+        }
+        // 点击下一步
+        var isStepValid = false;
+        switch(obj[0].rel){
+          case '1':
+            $.ajax({
+              'type': 'POST',
+              'async': false,
+              'dataType': 'json',
+              'data': $('#step-1-form').serialize(),
+              'url': './ci_mvc_generator.php'
+            }).done(
+              function(data,status){
+                if(data['status'] == false){
+                  alert(data['info']);
+                }else{
+                  if ($('#tables-checkbox').attr('is_add_checkbox') != 'true') {
+                    $('#tables-checkbox').attr('is_add_checkbox', 'true')
+                    $.each(data['info'], function(){
+                      var div = '<div class="col-md-6"><div class="checkbox"><input name="tables[]" type="checkbox" value="'+this['tbl_name']+'"><label>'+this['tbl_name']+(this['tbl_comment'])+'</label></div></div>';
+                      $('#tables-checkbox').append(div);
+                    });
+                    $('#tables-checkbox input').each(function(){
+                      var self = $(this),
+                          label = self.next(),
+                          label_text = label.text();
+                      label.remove();
+                      self.iCheck({
+                        checkboxClass: 'icheckbox_line-green',
+                        insert: '<div class="icheck_line-icon"></div>' + label_text
+                      });
+                    });
+                  }
+                  $("#step-2-form [name='host']").val($("#step-1-form [name='host']").val());
+                  $("#step-2-form [name='user']").val($("#step-1-form [name='user']").val());
+                  $("#step-2-form [name='pwd']").val($("#step-1-form [name='pwd']").val());
+                  $("#step-2-form [name='db']").val($("#step-1-form [name='db']").val());
+                  isStepValid = true;
+                }
+              }
+            ).fail(function(){
+              alert('无法连接到ci_mvc_generator.php');
+            });
+            break;
+          case '2':
+            $.ajax({
+              'type': 'POST',
+              'async': false,
+              'dataType': 'json',
+              'data': $('#step-2-form').serialize(),
+              'url': './ci_mvc_generator.php'
+            }).done(
+              function(data,status){
+                console.log(data,status);
+                if(data['status'] == false){
+                  alert(data['info']);
+                }else{
+                  $('#config-textarea').text(data['info']);
+                  isStepValid = true;
+                }
+              }
+            ).fail(function(){
+              alert('无法连接到ci_mvc_generator.php');
+            });
+            break;
+          case '3':
+            $.ajax({
+              'type': 'POST',
+              'async': false,
+              'dataType': 'json',
+              'data': $('#step-2-form').serialize(),
+              'url': './ci_mvc_generator.php'
+            }).done(
+              function(data,status){
+                console.log(data,status);
+                if(data['status'] == false){
+                  alert(data['info']);
+                }else{
+                  $('#config-textarea').text(data['info']);
+                  isStepValid = true;
+                }
+              }
+            ).fail(function(){
+              alert('无法连接到ci_mvc_generator.php');
+            });
+            break;
+          case '4':
+            var data_obj = $('#step-3-form').serializeArray();
+            data_obj = $.merge(data_obj, $("#step-4-form").serializeArray());
+            $.ajax({
+              'type': 'POST',
+              'async': false,
+              'dataType': 'json',
+              'data': data_obj,
+              'url': './ci_mvc_generator.php'
+            }).done(
+              function(data,status){
+                console.log(data,status);
+                if(data['status'] == false){
+                  alert(data['info']);
+                }else{
+                  $('#config-textarea').text(data['info']);
+                  isStepValid = true;
+                }
+              }
+            ).fail(function(){
+              alert('无法连接到ci_mvc_generator.php');
+            });
+            break;
+        }
+        return isStepValid;
+      }
+
+      function wizard_showStep(obj, context){
+        var wizard_stepContainer_height = $(window).height() - $('#wizard .stepContainer').offset().top - 70
+        $('#wizard .stepContainer').height(wizard_stepContainer_height);
+        // 第四步文本框高度动态定义
+        if (obj[0].rel == 4) {
+          $("#config-textarea, #example-config-textarea").height($('#wizard .stepContainer').height() - 120);
+        }
+      }
+      init_window();
+      init_SmartWizard();
+      init_iCheck();
+    </script>
+  </body>
+</html>

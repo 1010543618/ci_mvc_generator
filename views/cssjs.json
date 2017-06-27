@@ -1,0 +1,60 @@
+{
+	"back/home.html" : {
+		"css" : [
+			"<?php echo base_url('views/back/vendors/bootstrap/css/bootstrap.min.css')?>",
+			"<?php echo base_url('views/back/vendors/font-awesome/css/font-awesome.min.css')?>",
+			"<?php echo base_url('views/back/build/css/custom.min.css')?>"
+		],
+		"js" : [
+			"<?php echo base_url('views/back/vendors/jquery/jquery.min.js')?>",
+			"<?php echo base_url('views/back/vendors/bootstrap/js/bootstrap.min.js')?>"
+		]
+	},
+	"back" : {
+		"css" : [
+			"<?php echo base_url('views/back/vendors/bootstrap/css/bootstrap.min.css')?>",
+			
+			"<?php echo base_url('views/back/vendors/datatables.net-bs/dataTables.bootstrap.min.css')?>",
+			"<?php echo base_url('views/back/vendors/datatables.net-buttons-bs/buttons.bootstrap.min.css')?>",
+			"<?php echo base_url('views/back/vendors/datatables.net-fixedheader-bs/fixedHeader.bootstrap.min.css')?>",
+			"<?php echo base_url('views/back/vendors/datatables.net-responsive-bs/responsive.bootstrap.min.css')?>",
+			"<?php echo base_url('views/back/vendors/datatables.net-scroller-bs/scroller.bootstrap.min.css')?>",
+			
+			"<?php echo base_url('views/back/vendors/font-awesome/css/font-awesome.min.css')?>",
+			"<?php echo base_url('views/back/vendors/iCheck/skins/line/green.css')?>",
+			"<?php echo base_url('views/back/vendors/jquery-confirm/jquery-confirm.min.css')?>",
+			"<?php echo base_url('views/back/vendors/bootstrap-fileinput/css/fileinput.min.css')?>",
+			"<?php echo base_url('views/back/vendors/bootstrap-datepicker/css/bootstrap-datepicker.min.css')?>",
+			"<?php echo base_url('views/back/vendors/bootstrap-timepicker/bootstrap-timepicker.min.css')?>",
+			
+			"<?php echo base_url('views/back/build/css/custom.min.css')?>"
+		],
+		"js" : [    
+		    "<?php echo base_url('views/back/vendors/jquery/jquery.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/bootstrap/js/bootstrap.min.js')?>",
+
+		    "<?php echo base_url('views/back/vendors/datatables.net/jquery.dataTables.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/datatables.net-bs/dataTables.bootstrap.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/datatables.net-buttons-bs/dataTables.buttons.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/datatables.net-buttons-bs/buttons.bootstrap.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/datatables.net-buttons-bs/buttons.flash.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/datatables.net-buttons-bs/buttons.html5.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/datatables.net-buttons-bs/buttons.print.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/datatables.net-fixedheader-bs/dataTables.fixedHeader.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/datatables.net-keytable/dataTables.keyTable.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/datatables.net-responsive-bs/dataTables.responsive.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/datatables.net-responsive-bs/responsive.bootstrap.js')?>",
+		    "<?php echo base_url('views/back/vendors/datatables.net-scroller-bs/dataTables.scroller.min.js')?>",
+		    
+		    "<?php echo base_url('views/back/vendors/parsleyjs/parsley.min.js')?>",
+			"<?php echo base_url('views/back/vendors/iCheck/icheck.min.js')?>",
+			"<?php echo base_url('views/back/vendors/jquery-confirm/jquery-confirm.min.js')?>",
+			"<?php echo base_url('views/back/vendors/bootstrap-fileinput/js/fileinput.min.js')?>",
+			"<?php echo base_url('views/back/vendors/bootstrap-datepicker/js/bootstrap-datepicker.min.js')?>",
+			"<?php echo base_url('views/back/vendors/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js')?>",
+			"<?php echo base_url('views/back/vendors/bootstrap-timepicker/bootstrap-timepicker.min.js')?>",
+		    "<?php echo base_url('views/back/vendors/ueditor/ueditor.config.js')?>",
+		    "<?php echo base_url('views/back/vendors/ueditor/ueditor.all.min.js')?>"
+		]
+	}
+}

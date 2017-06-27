@@ -1,0 +1,22 @@
+<style>
+  .row{
+    margin: 0;
+  }
+  .padding-0{
+    padding: 0;
+  }
+  .bg_write{
+    background: #EEE;
+  }
+  .cmg-config-example-title{
+    margin: 8px 0 0;
+    border-radius: 3px;
+    height: 25px;
+    line-height: 25px;
+    padding-left: 5px;
+  }
+  #config-textarea, #example-config-textarea{
+    width: 100%;
+    height: 500px;
+  }
+</style>
