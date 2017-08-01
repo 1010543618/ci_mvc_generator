@@ -57,7 +57,7 @@
                         <span class="step_no">3</span>
                         <span class="step_descr">
                             Step 3<br />
-                            <small>选择生成位置（"../"是mvc_generator文件夹）</small>
+                            <small>选择生成位置</small>
                         </span>
                       </a>
                     </li>
@@ -155,7 +155,7 @@
                   </div>
                   <!--  -->
                   <div id="step-3">
-                    <h2 class="StepTitle text-center">选择生成位置</h2>
+                    <h2 class="StepTitle text-center">选择生成位置（"../"是mvc_generator文件夹）</h2>
                     <form id="step-3-form" method="post" class="form-horizontal form-label-left">
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">model文件夹<span class="required">*</span>
@@ -604,7 +604,7 @@
                       <li>
                         <h3>【表名】(map):</h3>
                         <ul>
-                          <li>pri_field(<*>string):【左表字段名称：表名.字段名】,</li>
+                          <li>pri_field(<*>string):【左表字段名称：表名.字段名】（如果有需要操作的列'manipulation_col'，则pri_field必须在主表的ids中）,</li>
                           <li>join_field(<*>string):【右表字段名称：表名.字段名】,</li>
                           <li>
                             <h4>col(list，连接表要查询的列):</h4>
@@ -621,32 +621,34 @@
                           </li>
                           <li>
                             <h4>manipulation_col(map，连接要操作的从其他表选数据的列):</h4>
-                            <li>
-                              <h5>pri_col(list，连接表与主表对应的列):</h5>
-                              <ul>
-                                <li>
-                                  <h6>(map，连接表与主表对应的每一列):</h6>
-                                  <ul>
-                                    <li>field(<*>string):【列的字段名】,</li>
-                                    <li>pri_field(<*>string):【列对应的主表的字段名】,</li>
-                                  </ul>
-                                </li>
-                              </ul>
-                            </li>
-                            <li>
-                              <h5>input_col(map，连接表要输入数据的列):</h5>
-                              <ul>
-                                <li>
-                                  <h6>(map，连接表要输入数据的每一列):</h6>
-                                  <ul>
-                                    <li>field(<*>string):【列的字段名】,</li>
-                                    <li>comment(<*>string):【列显示的名字】,</li>
-                                    <li>option_field_conf(<*>string):【作为选项的字段，[0]：表名，[1]：存储时用的字段名，[2]：展示用的字段名。将其他表的字段作为选项】,</li>
-                                    <li>type(string):【表单中选择的形式，multichoice（默认）/select（select将使用select单选，multichoice使用checkbox复选）】,</li>
-                                  </ul>
-                                </li>
-                              </ul>
-                            </li>
+                            <ul>
+                              <li>
+                                <h5>pri_col(list，连接表与主表对应的列):</h5>
+                                <ul>
+                                  <li>
+                                    <h6>(map，连接表与主表对应的每一列):</h6>
+                                    <ul>
+                                      <li>field(<*>string):【列的字段名】,</li>
+                                      <li>pri_field(<*>string):【列对应的主表的字段名】,</li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li>
+                                <h5>input_col(map，连接表要输入数据的列):</h5>
+                                <ul>
+                                  <li>
+                                    <h6>(map，连接表要输入数据的每一列):</h6>
+                                    <ul>
+                                      <li>field(<*>string):【列的字段名】,</li>
+                                      <li>comment(<*>string):【列显示的名字】,</li>
+                                      <li>option_field_conf(<*>string):【作为选项的字段，[0]：表名，[1]：存储时用的字段名，[2]：展示用的字段名。将其他表的字段作为选项】,</li>
+                                      <li>type(string):【表单中选择的形式，multichoice（默认）/select（select将使用select单选，multichoice使用checkbox复选）】,</li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
                           </li>
                         </ul>
                       </li>

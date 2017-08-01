@@ -119,20 +119,22 @@ class MY_Controller extends CI_Controller {
         // 修改后删除要操作的外链接表的数据再重新插入
         foreach ($this->bean['join_manipulation_pri_col'] as $table_name => $fields) {
             $insert_batch_data = array();
-            // var_dump($this->bean['join_manipulation_pri_col'],  $table_name, $fields);die();
+            // 找到主表与外表关联的值，用于外表进行删除旧值和插入新值
+            //（主表跟外表连接的字段必须在ids中）
             foreach ($fields as $pri_field => $field) {
-                $pri_cols[$field] = $ids[$pri_field];
+                $associate[$field] = $ids[$pri_field];
             }
+            // 构造要重新插入连接表的数据
+            // （每个字段的每个数据都是单独的一条记录，将多个字段的数据组成一条记录还没做还没做。所以同时操作两个字段会第一个字段的数据是一组，第二个字段的数据是一组）
             foreach ($join_data[$table_name] as $col_name => $col_datas) {
-                $data = $pri_cols;
+                $data = $associate;
                 foreach ($col_datas as $col_data) {
                     $data[$col_name] = $col_data;
                     $insert_batch_data[] = $data;
                 }
             }
-            
             $model = "{$table_name}_model";
-            if (!$this->$model->delete($ids)) {
+            if (!$this->$model->delete($associate)) {
                 $result['status'] = false;
                 $this->returnResult($result);
             }
@@ -155,20 +157,24 @@ class MY_Controller extends CI_Controller {
     public function delete() {
         if (!isset($this->bean['ids'])) {
             $result['status'] = false;
-            $result['msg'] = '没有id无法更新';
+            $result['msg'] = '没有id无法删除';
             $this->returnResult($result);
         }
-        // 获取id
+        // 获取ids
         $ids = $this->input->post('ids', TRUE);
         // 若有文件delete前将文件位置保存
         if ($this->bean['files']) {
             $files = $this->{$this->model_name}->getFieldsById($id, implode(',', $this->bean['files']));
         }
         // 若有要操作的外链接表，应该在删除数据前删除外链表中的数据
-        foreach ($this->bean['join_manipulation_pri_col'] as $join_manipulation_pri_col) {
-            $insert_batch_data = array();
-            $model = "{$join_manipulation_pri_col[0]}_model";
-            if (!$this->$model->delete($id)) {
+        foreach ($this->bean['join_manipulation_pri_col'] as $table_name => $fields) {
+            // 找到主表与外表关联的值，用于外表进行删除旧值和插入新值
+            //（主表跟外表连接的字段必须在ids中）
+            foreach ($fields as $pri_field => $field) {
+                $associate[$field] = $ids[$pri_field];
+            }
+            $model = "{$table_name}_model";
+            if (!$this->$model->delete($associate)) {
                 $result['status'] = false;
                 $this->returnResult($result);
             }

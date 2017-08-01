@@ -494,7 +494,7 @@
       var data = JSON.parse(data.replace(/&quot;/g, '"'));
     }
     var content = '';
-<?php foreach ($bean['id'] as $key => $id): ?>
+<?php foreach ($bean['id'] as $id): ?>
     content += "<?php echo $id['comment']?>："+data.<?php echo $id['field']?>;
 <?php endforeach ?>
     var del_confirm = $.confirm({
@@ -505,9 +505,9 @@
             text: '确认',
             btnClass : 'btn-danger',
             action : function(){
-              var post_data = Object();
+              var post_data = {ids: {}};
 <?php foreach ($bean['id'] as $key => $id): ?>
-              post_data.<?php echo $id['field']?> = data.<?php echo $id['field']?>;
+              post_data.ids.<?php echo $id['field']?> = data.<?php echo $id['field']?>;
 <?php endforeach ?>
               $.post("<?php echo "<?=site_url('back/{$bean_name}/delete')?>"?>", post_data, function(data,status){
                 if (data['status'] == true) {
