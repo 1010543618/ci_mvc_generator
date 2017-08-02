@@ -111,7 +111,8 @@ class MY_Controller extends CI_Controller {
         // 若有文件进行了修改，update后删除删除原文件
         if ($this->bean['files']) {
             foreach ($files as $file_col_name => $file_name) {
-                if ($file_name != $form_data[$file_col_name]) {
+                // $file_name不为空 && $file_name和新提交的名字不同
+                if ($file_name && $file_name != $form_data[$file_col_name]) {
                     @unlink('./' . $file);
                 }
             }
@@ -188,7 +189,8 @@ class MY_Controller extends CI_Controller {
         // 若有文件delete后删除删除原文件
         if ($this->bean['files']) {
             foreach ($files as $file) {
-                @unlink('./' . $file);
+                // 文件名为空不进行删除操作
+                $file && @unlink('./' . $file);
             }
         }
         $this->returnResult($result);
